@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "7bd3a977786458658c9e3a9be911df3b",
+    "identityHash": "fae3dd8f5e2a132b96e3dcea18a92ec0",
     "entities": [
       {
         "tableName": "exchange_rates",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`base` TEXT NOT NULL, `last_updated` INTEGER NOT NULL, `EUR` REAL NOT NULL, `USD` REAL NOT NULL, `XRP` REAL NOT NULL, `ZAR` REAL NOT NULL, PRIMARY KEY(`base`, `last_updated`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`base` TEXT NOT NULL, `last_updated` INTEGER NOT NULL, `EUR` REAL NOT NULL, `USD` REAL NOT NULL, `RUB` REAL NOT NULL, `TRY` REAL NOT NULL, PRIMARY KEY(`base`, `last_updated`))",
         "fields": [
           {
             "fieldPath": "base",
@@ -33,14 +33,14 @@
             "notNull": true
           },
           {
-            "fieldPath": "XRP",
-            "columnName": "XRP",
+            "fieldPath": "RUB",
+            "columnName": "RUB",
             "affinity": "REAL",
             "notNull": true
           },
           {
-            "fieldPath": "ZAR",
-            "columnName": "ZAR",
+            "fieldPath": "TRY",
+            "columnName": "TRY",
             "affinity": "REAL",
             "notNull": true
           }
@@ -59,7 +59,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7bd3a977786458658c9e3a9be911df3b')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'fae3dd8f5e2a132b96e3dcea18a92ec0')"
     ]
   }
 }

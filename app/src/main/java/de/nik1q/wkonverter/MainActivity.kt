@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
         // pressing "los" buttton
         binding.btGetKurs.setOnClickListener {
-            val array = arrayOf("EUR", "USD", "XRP", "ZAR").forEach {
+            val array = arrayOf("EUR", "USD", "RUB", "TRY").forEach {
                 Thread.sleep(2000)
                 repository.getExchangeRates(it) { exchangeRates, error ->
                     if (exchangeRates != null) {

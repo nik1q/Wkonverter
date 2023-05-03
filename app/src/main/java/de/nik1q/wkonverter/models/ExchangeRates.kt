@@ -11,6 +11,6 @@ data class ExchangeRates(
 
     val EUR: Double=1.0,
     val USD: Double=1.0,
-    val XRP: Double=1.0,
-    val ZAR: Double=1.0
+    val RUB: Double=1.0,
+    val TRY: Double=1.0
 )
