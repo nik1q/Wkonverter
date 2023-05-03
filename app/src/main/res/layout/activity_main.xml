@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/btSelectRub"
+        android:layout_width="74dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:hint="Ausführen"
+        android:text="₽"
+        app:layout_constraintStart_toEndOf="@+id/btSelectUsd"
+        app:layout_constraintTop_toBottomOf="@+id/btGetKurs" />
+
+    <Button
+        android:id="@+id/btSelectTry"
+        android:layout_width="74dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:hint="Ausführen"
+        android:text="₺"
+        app:layout_constraintStart_toEndOf="@+id/btSelectRub"
+        app:layout_constraintTop_toBottomOf="@+id/btGetKurs" />
+
+    <Button
+        android:id="@+id/btSelectUsd"
+        android:layout_width="74dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:hint="Ausführen"
+        android:text="$"
+        app:layout_constraintStart_toEndOf="@+id/btSelectEur"
+        app:layout_constraintTop_toBottomOf="@+id/btGetKurs" />
+
+    <Button
+        android:id="@+id/btSelectEur"
+        android:layout_width="74dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:hint="Ausführen"
+        android:text="€"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btGetKurs" />
+
+    <Button
+        android:id="@+id/btGetResult"
+        android:layout_width="108dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:hint="Ausführen"
+        android:text="los!"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.196"
+        app:layout_constraintStart_toEndOf="@+id/edGetValue"
+        app:layout_constraintTop_toBottomOf="@+id/tvSelectCurrency" />
+
+    <TextView
+        android:id="@+id/txLastUpd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Letzte Aktualisierung"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btGetKurs"
+        android:layout_width="165dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Aktuellen Kurs herunterladen"
+        android:text="Laden"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txLastUpd" />
+
+    <TextView
+        android:id="@+id/tvSelectCurrency"
+        android:layout_width="280dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:text="Geben Sie den Betrag ein"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btSelectEur" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="418dp"
+        android:layout_height="403dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.512"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edGetValue"
+        app:layout_constraintVertical_bias="0.157" />
+
+    <EditText
+        android:id="@+id/edGetValue"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:hint="0"
+        android:inputType="number|numberDecimal"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSelectCurrency" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,65 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "7bd3a977786458658c9e3a9be911df3b",
+    "entities": [
+      {
+        "tableName": "exchange_rates",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`base` TEXT NOT NULL, `last_updated` INTEGER NOT NULL, `EUR` REAL NOT NULL, `USD` REAL NOT NULL, `XRP` REAL NOT NULL, `ZAR` REAL NOT NULL, PRIMARY KEY(`base`, `last_updated`))",
+        "fields": [
+          {
+            "fieldPath": "base",
+            "columnName": "base",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "last_updated",
+            "columnName": "last_updated",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "EUR",
+            "columnName": "EUR",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "USD",
+            "columnName": "USD",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "XRP",
+            "columnName": "XRP",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ZAR",
+            "columnName": "ZAR",
+            "affinity": "REAL",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "base",
+            "last_updated"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7bd3a977786458658c9e3a9be911df3b')"
+    ]
+  }
+}
