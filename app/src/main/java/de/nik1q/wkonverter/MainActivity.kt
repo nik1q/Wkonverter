@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -51,11 +52,9 @@ class MainActivity : AppCompatActivity() {
                         Log.d("Exchange Rates", "Exchange rates: $rates")
                         Log.d("Exchange Rates", "Last updated: $lastUpdated")
                         //last update Time
-                        val dateString =
-                            SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.getDefault()).format(
-                                Date(lastUpdated.toLong())
-                            )
-                        LastUpdatedHelper.updateLastUpdated(dateString, binding.txLastUpd)
+                        val formattedLastUpdated = formatUnixTimestamp(lastUpdated)
+                        LastUpdatedHelper.updateLastUpdated(formattedLastUpdated, binding.txLastUpd)
+
                     } else {
                         Toast.makeText(this, "Error: ${error?.message}", Toast.LENGTH_SHORT).show()
                     }
@@ -63,5 +62,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+    // Unix-Time Convertor
+    private fun formatUnixTimestamp(timestamp: Long): String {
+        val sdf = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.getDefault())
+        sdf.timeZone = TimeZone.getTimeZone("UTC")
+        return sdf.format(Date(timestamp * 1000))
+    }
+
 }
 

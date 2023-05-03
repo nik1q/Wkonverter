@@ -6,7 +6,7 @@ import androidx.room.Entity
 data class RateResponse(
     val base: String,
     val exchange_rates: ExchangeRates,
-    val last_updated: Int
+    val last_updated: Long
 )
 
 

@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class ExchangeRates(
     var base: String,
 
-    var last_updated: Int,
+    var last_updated: Long,
 
     val EUR: Double=1.0,
     val USD: Double=1.0,
