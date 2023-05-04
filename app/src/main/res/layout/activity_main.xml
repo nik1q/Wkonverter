@@ -134,7 +134,7 @@
         app:layout_constraintTop_toBottomOf="@+id/btGetResult" />
 
     <TextView
-        android:id="@+id/textViewUSD"
+        android:id="@+id/textViewUsd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"

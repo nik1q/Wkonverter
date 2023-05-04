@@ -1,6 +1,5 @@
 package de.nik1q.wkonverter
 
-import android.content.res.XmlResourceParser
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -12,6 +11,7 @@ import de.nik1q.wkonverter.repository.ExchangeRatesRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -60,14 +60,67 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
+            // Set Currency Rate
+            var curExcRate = ""
+            binding.btSelectRub.setOnClickListener {
+                curExcRate = "RUB"
+                Toast.makeText(this, "Währung ist: $curExcRate", Toast.LENGTH_SHORT).show()
+            }
+
+            binding.btSelectTry.setOnClickListener {
+                curExcRate = "TRY"
+                Toast.makeText(this, "Währung ist: $curExcRate", Toast.LENGTH_SHORT).show()
+            }
+
+            binding.btSelectUsd.setOnClickListener {
+                curExcRate = "USD"
+                Toast.makeText(this, "Währung ist: $curExcRate", Toast.LENGTH_SHORT).show()
+            }
+
+            binding.btSelectEur.setOnClickListener {
+                curExcRate = "EUR"
+                Toast.makeText(this, "Währung ist: $curExcRate", Toast.LENGTH_SHORT).show()
+            }
+
+            // take the Value entered by the User
+            //val edGetValue = binding.edGetValue.text.toString().toDouble()
+
+            binding.btGetResult.setOnClickListener {
+                // take the Value entered by the User
+                val edGetValue = binding.edGetValue.text.toString().toDouble()
+
+                CoroutineScope(Dispatchers.IO).launch {
+                    val curRate = db.rateResponseDao().getRateByBase(curExcRate)
+                    val usdCurRate = curRate?.USD ?: 0.0
+                    val eurCurRate = curRate?.EUR ?: 0.0
+                    val rubCurRate = curRate?.RUB ?: 0.0
+                    val tryCurRate = curRate?.TRY ?: 0.0
+                    withContext(Dispatchers.Main) {
+                        val usdResultConv = usdCurRate * edGetValue
+                        val eurResultConv = eurCurRate * edGetValue
+                        val rubResultConv = rubCurRate * edGetValue
+                        val tryResultConv = tryCurRate * edGetValue
+
+                        // Set the results in the TextViews
+                        binding.textViewUsd.text = String.format("%.2f", usdResultConv)
+                        binding.textViewEur.text = String.format("%.2f", eurResultConv)
+                        binding.textViewRub.text = String.format("%.2f", rubResultConv)
+                        binding.textViewTry.text = String.format("%.2f", tryResultConv)
+                    }
+                }
+            }
+
+
+
+
         }
     }
+
     // Unix-Time Convertor
     private fun formatUnixTimestamp(timestamp: Long): String {
         val sdf = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.getDefault())
         sdf.timeZone = TimeZone.getTimeZone("UTC")
         return sdf.format(Date(timestamp * 1000))
     }
-
 }
 
