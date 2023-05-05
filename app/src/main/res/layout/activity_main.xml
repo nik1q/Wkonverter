@@ -117,9 +117,10 @@
         android:id="@+id/textViewEur"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:text="TextView"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="0"
+        android:textSize="48sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btGetResult" />
 
@@ -127,20 +128,21 @@
         android:id="@+id/textViewRub"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btGetResult" />
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="0"
+        android:textSize="48sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewUsd" />
 
     <TextView
         android:id="@+id/textViewUsd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="@+id/textViewEur"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="0"
+        android:textSize="48sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewEur" />
 
@@ -148,12 +150,11 @@
         android:id="@+id/textViewTry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textViewRub"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="0"
+        android:textSize="48sp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewRub" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

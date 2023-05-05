@@ -2,6 +2,7 @@ package de.nik1q.wkonverter
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import de.nik1q.wkonverter.database.RateResponseDatabase
@@ -61,25 +62,38 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             // Set Currency Rate
+            var lastClickedButton: Button? = null
             var curExcRate = ""
             binding.btSelectRub.setOnClickListener {
                 curExcRate = "RUB"
                 Toast.makeText(this, "Währung ist: $curExcRate", Toast.LENGTH_SHORT).show()
+                binding.btSelectRub.setBackgroundColor(resources.getColor(R.color.selected_button_color))
+                lastClickedButton?.setBackgroundColor(resources.getColor(R.color.default_button_color))
+                lastClickedButton = binding.btSelectRub
             }
 
             binding.btSelectTry.setOnClickListener {
                 curExcRate = "TRY"
                 Toast.makeText(this, "Währung ist: $curExcRate", Toast.LENGTH_SHORT).show()
+                binding.btSelectTry.setBackgroundColor(resources.getColor(R.color.selected_button_color))
+                lastClickedButton?.setBackgroundColor(resources.getColor(R.color.default_button_color))
+                lastClickedButton = binding.btSelectTry
             }
 
             binding.btSelectUsd.setOnClickListener {
                 curExcRate = "USD"
                 Toast.makeText(this, "Währung ist: $curExcRate", Toast.LENGTH_SHORT).show()
+                binding.btSelectUsd.setBackgroundColor(resources.getColor(R.color.selected_button_color))
+                lastClickedButton?.setBackgroundColor(resources.getColor(R.color.default_button_color))
+                lastClickedButton = binding.btSelectUsd
             }
 
             binding.btSelectEur.setOnClickListener {
                 curExcRate = "EUR"
                 Toast.makeText(this, "Währung ist: $curExcRate", Toast.LENGTH_SHORT).show()
+                binding.btSelectEur.setBackgroundColor(resources.getColor(R.color.selected_button_color))
+                lastClickedButton?.setBackgroundColor(resources.getColor(R.color.default_button_color))
+                lastClickedButton = binding.btSelectEur
             }
 
             // take the Value entered by the User
@@ -87,6 +101,11 @@ class MainActivity : AppCompatActivity() {
 
             binding.btGetResult.setOnClickListener {
                 // take the Value entered by the User
+                val edGetValueText = binding.edGetValue.text.toString()
+                if (edGetValueText.isEmpty()) {
+                    // display an error message or handle the error in some other way
+                    return@setOnClickListener
+                }
                 val edGetValue = binding.edGetValue.text.toString().toDouble()
 
                 CoroutineScope(Dispatchers.IO).launch {
@@ -102,10 +121,10 @@ class MainActivity : AppCompatActivity() {
                         val tryResultConv = tryCurRate * edGetValue
 
                         // Set the results in the TextViews
-                        binding.textViewUsd.text = String.format("%.2f", usdResultConv)
-                        binding.textViewEur.text = String.format("%.2f", eurResultConv)
-                        binding.textViewRub.text = String.format("%.2f", rubResultConv)
-                        binding.textViewTry.text = String.format("%.2f", tryResultConv)
+                        binding.textViewUsd.text = "$ %.2f".format(usdResultConv)
+                        binding.textViewEur.text = "€ %.2f".format(eurResultConv)
+                        binding.textViewRub.text = "₽ %.2f".format(rubResultConv)
+                        binding.textViewTry.text = "₺ %.2f".format(tryResultConv)
                     }
                 }
             }
