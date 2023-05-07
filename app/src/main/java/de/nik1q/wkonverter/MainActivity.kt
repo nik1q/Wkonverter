@@ -1,9 +1,13 @@
 package de.nik1q.wkonverter
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.Toast
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import de.nik1q.wkonverter.database.RateResponseDatabase
 import de.nik1q.wkonverter.databinding.ActivityMainBinding
@@ -106,8 +110,8 @@ class MainActivity : AppCompatActivity() {
                     // display an error message or handle the error in some other way
                     return@setOnClickListener
                 }
-                val edGetValue = binding.edGetValue.text.toString().toDouble()
 
+                val edGetValue = binding.edGetValue.text.toString().toDouble()
                 CoroutineScope(Dispatchers.IO).launch {
                     val curRate = db.rateResponseDao().getRateByBase(curExcRate)
                     val usdCurRate = curRate?.USD ?: 0.0
@@ -129,8 +133,30 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
+            // hide keyboard
+            binding.edGetValue.setOnEditorActionListener { _, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    inputMethodManager.hideSoftInputFromWindow(binding.edGetValue.windowToken, 0)
+                    true
+                } else {
+                    false
+                }
+            }
 
+            binding.root.setOnClickListener {
+                val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.hideSoftInputFromWindow(binding.edGetValue.windowToken, 0)
+            }
 
+            binding.edGetValue.setOnEditorActionListener { _, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    binding.btGetResult.performClick()
+                    true
+                } else {
+                    false
+                }
+            }
 
         }
     }
