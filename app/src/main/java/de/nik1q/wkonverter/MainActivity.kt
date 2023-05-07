@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         val db = RateResponseDatabase.getDatabase(applicationContext)
         db.openHelper.writableDatabase
 
-        // pressing "los" buttton
+        // pressing the "los" button
         binding.btGetKurs.setOnClickListener {
             val array = arrayOf("EUR", "USD", "RUB", "TRY").forEach {
                 Thread.sleep(2000)
@@ -44,18 +44,16 @@ class MainActivity : AppCompatActivity() {
                         val base = exchangeRates.base
                         val rates = exchangeRates.exchange_rates
                         val lastUpdated = exchangeRates.last_updated
-
                         rates.base = base
                         rates.last_updated = lastUpdated
                         CoroutineScope(Dispatchers.IO).launch {
                             db.rateResponseDao().insert(rates)
                         }
-
-
-                        // processing date into a log
+                        // logging of data on API response received
                         Log.d("Exchange Rates", "Base currency: $base")
                         Log.d("Exchange Rates", "Exchange rates: $rates")
                         Log.d("Exchange Rates", "Last updated: $lastUpdated")
+
                         //last update Time
                         val formattedLastUpdated = formatUnixTimestamp(lastUpdated)
                         LastUpdatedHelper.updateLastUpdated(formattedLastUpdated, binding.txLastUpd)
@@ -65,7 +63,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-            // Set Currency Rate
+            // Selecting the current base currency for conversion
             var lastClickedButton: Button? = null
             var curExcRate = ""
             binding.btSelectRub.setOnClickListener {
@@ -75,7 +73,6 @@ class MainActivity : AppCompatActivity() {
                 lastClickedButton?.setBackgroundColor(resources.getColor(R.color.default_button_color))
                 lastClickedButton = binding.btSelectRub
             }
-
             binding.btSelectTry.setOnClickListener {
                 curExcRate = "TRY"
                 Toast.makeText(this, "Währung ist: $curExcRate", Toast.LENGTH_SHORT).show()
@@ -83,7 +80,6 @@ class MainActivity : AppCompatActivity() {
                 lastClickedButton?.setBackgroundColor(resources.getColor(R.color.default_button_color))
                 lastClickedButton = binding.btSelectTry
             }
-
             binding.btSelectUsd.setOnClickListener {
                 curExcRate = "USD"
                 Toast.makeText(this, "Währung ist: $curExcRate", Toast.LENGTH_SHORT).show()
@@ -91,7 +87,6 @@ class MainActivity : AppCompatActivity() {
                 lastClickedButton?.setBackgroundColor(resources.getColor(R.color.default_button_color))
                 lastClickedButton = binding.btSelectUsd
             }
-
             binding.btSelectEur.setOnClickListener {
                 curExcRate = "EUR"
                 Toast.makeText(this, "Währung ist: $curExcRate", Toast.LENGTH_SHORT).show()
@@ -100,17 +95,20 @@ class MainActivity : AppCompatActivity() {
                 lastClickedButton = binding.btSelectEur
             }
 
-            // take the Value entered by the User
-            //val edGetValue = binding.edGetValue.text.toString().toDouble()
-
+            // if no currency is selected - display a message
             binding.btGetResult.setOnClickListener {
-                // take the Value entered by the User
-                val edGetValueText = binding.edGetValue.text.toString()
-                if (edGetValueText.isEmpty()) {
-                    // display an error message or handle the error in some other way
-                    return@setOnClickListener
+                if (curExcRate.isBlank()) {
+                    Toast.makeText(this, "Wählen Sie Währung zuerst", Toast.LENGTH_SHORT).show()
+                    binding.edGetValue.isEnabled = false
+                } else {
+                    binding.edGetValue.isEnabled = true
+                    val edGetValueText = binding.edGetValue.text.toString()
+                    if (edGetValueText.isEmpty()) {
+                        return@setOnClickListener
+                    }
                 }
-
+                // This code converts currencies based on the value entered by the user
+                // and currency exchange rates from the database.
                 val edGetValue = binding.edGetValue.text.toString().toDouble()
                 CoroutineScope(Dispatchers.IO).launch {
                     val curRate = db.rateResponseDao().getRateByBase(curExcRate)
@@ -123,8 +121,7 @@ class MainActivity : AppCompatActivity() {
                         val eurResultConv = eurCurRate * edGetValue
                         val rubResultConv = rubCurRate * edGetValue
                         val tryResultConv = tryCurRate * edGetValue
-
-                        // Set the results in the TextViews
+                        // Writing the result in TextViews
                         binding.textViewUsd.text = "$ %.2f".format(usdResultConv)
                         binding.textViewEur.text = "€ %.2f".format(eurResultConv)
                         binding.textViewRub.text = "₽ %.2f".format(rubResultConv)
@@ -133,11 +130,12 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            // hide keyboard
+            // keyboard hiding
             binding.edGetValue.setOnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                     inputMethodManager.hideSoftInputFromWindow(binding.edGetValue.windowToken, 0)
+                    binding.btGetResult.performClick()
                     true
                 } else {
                     false
@@ -148,18 +146,9 @@ class MainActivity : AppCompatActivity() {
                 val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 inputMethodManager.hideSoftInputFromWindow(binding.edGetValue.windowToken, 0)
             }
-
-            binding.edGetValue.setOnEditorActionListener { _, actionId, _ ->
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    binding.btGetResult.performClick()
-                    true
-                } else {
-                    false
-                }
-            }
-
         }
     }
+}
 
     // Unix-Time Convertor
     private fun formatUnixTimestamp(timestamp: Long): String {
@@ -167,5 +156,4 @@ class MainActivity : AppCompatActivity() {
         sdf.timeZone = TimeZone.getTimeZone("UTC")
         return sdf.format(Date(timestamp * 1000))
     }
-}
 

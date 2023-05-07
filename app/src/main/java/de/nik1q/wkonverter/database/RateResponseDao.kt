@@ -16,6 +16,4 @@ interface RateResponseDao {
     suspend fun getRateByBase(base : String) : ExchangeRates?
 
 
-//    @Query("SELECT MAX(last_updated) FROM exchange_rates WHERE base = :base")
-//    suspend fun getLastRates(base: String): ExchangeRates
 }

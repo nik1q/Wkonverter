@@ -1,7 +1,7 @@
 package de.nik1q.wkonverter.models
 
 import android.widget.TextView
-import java.lang.reflect.Type
+
 
 // get date of last update
 class LastUpdatedHelper {
